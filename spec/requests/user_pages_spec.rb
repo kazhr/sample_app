@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 require 'spec_helper'
 
 describe "User Pages" do
@@ -56,6 +54,7 @@ describe "User Pages" do
         it { should have_selector('title', text: user.name) }
         it { should have_selector('div.alert.alert-success', text:'Welcome') }
 
+        it { should have_link('Sign out') }
       end
     end
   end

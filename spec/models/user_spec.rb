@@ -25,6 +25,7 @@ describe User do
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
+  it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
 
   it { should be_valid } # 正しい値が入力されていることをテスト
@@ -126,6 +127,12 @@ describe User do
       # specifyはitと同義 itを使用すると英語をして不自然な場合にこれで代用する
       specify { user_for_invalid_password.should be_false }
     end
+  end
+
+  # 記憶トークンが有効であること（空欄のない）をテストする
+  describe "remember token" do
+    before { @user.save }
+    its(:remember_token) { should_not be_blank }
   end
 
 end
