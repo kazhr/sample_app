@@ -12,7 +12,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
+
   def new
     # サインイン済みの場合は,
     # ユーザーを新規作成する必要がないため、
@@ -69,12 +71,13 @@ class UsersController < ApplicationController
   end
 
   private
-    def signed_in_user
-      unless signed_in?
-        store_location
-        redirect_to signin_url, notice: "Please sign in." unless signed_in?
-      end
-    end
+    # SessionsHelperに移動
+    # def signed_in_user
+      # unless signed_in?
+        # store_location
+        # redirect_to signin_url, notice: "Please sign in." unless signed_in?
+      # end
+    # end
 
     def correct_user
       @user = User.find(params[:id])
