@@ -71,5 +71,32 @@ describe "Static pages" do
         it { should have_content("2 microposts") }
       end
     end
+
+    describe "should render the correct pagination" do
+      before do
+        31.times { FactoryGirl.create(:micropost, user: user) }
+
+        sign_in user
+        visit root_path
+      end
+
+      it "should have 30 microposts at page 1" do
+        count = 0
+        user.microposts.paginate(page: 1).each do |micropost|
+          expect(page).to have_selector('li', text: micropost.content)
+          count += 1
+        end
+        expect(count).equal? 30
+      end
+      
+      it "should have 1 microposts at page 2" do
+        count = 0
+        user.microposts.paginate(page: 2).each do |micropost|
+          expect(page).to have_selector('li', text: micropost.content)
+          count += 1
+        end
+        expect(count).equal? 1
+      end
+    end
   end
 end
