@@ -1,4 +1,4 @@
-<span class="content"><%= post_item.content %></span>
+<span class="content"><%= wrap(post_item.content) %></span>
 <span class="timestamp">
   Posted <%= time_ago_in_words(post_item.created_at) %>ago.
 </span>
