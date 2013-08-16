@@ -228,6 +228,20 @@ describe User do
       subject { other_user }
       its(:followers) { should include(@user) }
     end
+
+    describe "destroy user" do
+      it "should destroy relationship" do
+        @user.destroy
+        expect(Relationship.where(follower_id: @user.id, followed_id: other_user.id)).to be_empty
+      end
+    end
+
+    describe "destroy other user" do
+      it "should destroy relationship" do
+        other_user.destroy
+        expect(Relationship.where(follower_id: @user.id, followed_id: other_user.id)).to be_empty
+      end
+    end
   end
 
 end
